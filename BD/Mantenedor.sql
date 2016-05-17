@@ -1,6 +1,8 @@
-create database Modulo1;
-use Modulo1;
-drop database Modulo1
+create database Mantenedor
+use Mantenedor
+
+create database Modulo2
+create database Modulo1
 
 create table CARGO
 (
@@ -677,7 +679,82 @@ insert into FUNCIONARIO values (378,'13671553','4','TORRES','BELLO','MARIA ANGEL
 
 insert into FUNCIONARIO values (379,'17747033','3','OROSTEGUI','ESPINOZA','MATIAS NICOLAS','M','1991-02-21',1111111,98863731,null,null,null,null,null,null,'A')
 
+use Mantenedor
 
 
 insert into USUARIO values(198,'123456')
 
+
+
+select Rut_Funcionario from FUNCIONARIO where Codigo_Funcionario = 198 
+
+
+insert into registro
+select	m.Codigo_Funcionario,m.Rut_Funcionario,m.DigitoV_Funcionario,m.Nom_Funcionario,
+		m.Cod_Modulo, m.Tipo_Registro, m.Fecha_Registro, m.Hora_Registro, m.Hora_Delay_registro 
+from Modulo1.dbo.registro m where not m.Hora_Registro in (select Hora_Registro from REGISTRO) 
+		and not m.Hora_Delay_registro in (select Hora_Delay_registro from REGISTRO)
+		and not m.Fecha_Registro in (select Fecha_Registro from REGISTRO)
+
+insert into registro
+select	m.Codigo_Funcionario,m.Rut_Funcionario,m.DigitoV_Funcionario,m.Nom_Funcionario,
+		m.Cod_Modulo, m.Tipo_Registro, m.Fecha_Registro, m.Hora_Registro, m.Hora_Delay_registro 
+from Modulo2.dbo.registro m where not m.Hora_Registro in (select Hora_Registro from REGISTRO) 
+		and not m.Hora_Delay_registro in (select Hora_Delay_registro from REGISTRO)
+		and not m.Fecha_Registro in (select Fecha_Registro from REGISTRO)
+
+
+
+select * from FUNCIONARIO
+select * from registro
+
+insert into registro
+select * from Modulo2.dbo.registro m where not m.Hora_Registro in (select Hora_Registro from REGISTRO)
+
+insert into registro
+SELECT m.Codigo_Funcionario,m.Rut_Funcionario,m.DigitoV_Funcionario,m.Nom_Funcionario,
+		m.Cod_Modulo, m.Tipo_Registro, m.Fecha_Registro, m.Hora_Registro, m.Hora_Delay_registro 
+from Modulo2.dbo.registro m INNER JOIN Mantenedor.dbo.REGISTRO t2
+ON m.Codigo_Funcionario = t2.Codigo_Funcionario where m.Hora_Registro <> t2.Hora_Registro
+
+
+
+WHERE t1.CodArt <> t2.CodArt
+
+
+SELECT * FROM Modulo1.DBO.FUNCIONARIO WHERE Nombre_Funcionario LIKE '%JULIO%'
+
+
+
+
+create proc REGISTRAR
+(	
+	@Codigo_Funcionario		int,
+	@Rut_Funcionario		varchar(8),
+	@DigitoV_Funcionario	char,
+	@Nom_Funcionario		varchar(100),
+	@Cod_Modulo				int,
+	@Tipo_Registro			varchar(10),
+	@Fecha_Registro			date,
+	@Hora_Registro			datetime,
+	@Hora_Delay_registro	datetime,
+	
+)
+as begin
+insert into registro values
+	(
+		@Codigo_Funcionario,
+		@Rut_Funcionario,
+		@DigitoV_Funcionario,
+		@Nom_Funcionario,
+		@Cod_Modulo,
+		@Tipo_Registro,
+		Fecha_Registro,
+		Hora_Registro,
+		Hora_Delay_registro,
+end 
+
+
+select * from registro
+select *from Modulo1.dbo.registro m
+select * from Modulo2.dbo.registro
